@@ -3,7 +3,7 @@ import express from 'express';
 import cors from 'cors';
 import jwt from 'jsonwebtoken';
 import cookieParser from 'cookie-parser';
-
+import {errorHandler} from './middlewares/error.middlewares.js';
 const app = express();
 
 app.use(
@@ -35,14 +35,19 @@ console.log("Generated Token:", token);
 
 
 
+app.use(cookieParser());
+dotenv.config();
+
+app.use(express.static('public'))
+
+import healthcheckRouter from './routes/healthcheck.routes.js';
+import userRouter from './routes/user.routes.js';
+
+app.use('/api/v1/healthcheck',healthcheckRouter);
+app.use('/api/v1/users',userRouter);
 
 
-
-
-
-
-
-
+app.use(errorHandler)
 
 
 
