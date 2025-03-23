@@ -2,11 +2,9 @@ import { Router } from 'express';
 import{healthcheck} from '../controllers/healthcheck.controller.js';
 
 // import{healthcheck} from '../routes/healthcheck.routes.js';
-const router = Router();
+const router = express.Router();
 
-router.route('/').get(healthcheck);
-
-
+router.get('/healthcheck', healthcheck);
 
 
 // export default (req, res) => {
