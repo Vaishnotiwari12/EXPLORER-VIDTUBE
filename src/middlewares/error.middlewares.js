@@ -2,19 +2,10 @@ import mongoose from "mongoose";
 
 import { ApiError } from "../utils/ApiError.js";
 
-const errorhandler = (err, req, res, next) => {
-    let error = err
-    if(!(error instanceof ApiError)){
-        const statusCode = error.statusCode || error instanceof
-        mongoose.Error ? 400 : 500
-       const message = error.message || "Something went wrong"
-        error = new ApiError(statusCode,message,error?.
-        errors || [] ,error.stack)
+export const errorHandler = (err, req, res, next) => {
+    if (err instanceof ApiError) {
+        return res.status(err.statusCode).json(new ApiResponse(err.statusCode, null, err.message));
     }
-   const response = {
-    ...error,
-    message:error.message,
-    ...(process.env.NODE_ENV === 'development' ?
-        {stack:error.stack} : {})   
-   }
-}
+
+    return res.status(500).json(new ApiResponse(500, null, 'Internal Server Error'));
+};

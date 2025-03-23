@@ -4,6 +4,7 @@ import cors from 'cors';
 import jwt from 'jsonwebtoken';
 import cookieParser from 'cookie-parser';
 import {errorHandler} from './middlewares/error.middlewares.js';
+import healthcheckRoutes from './routes/healthcheck.routes.js';
 const app = express();
 
 app.use(
@@ -23,6 +24,6 @@ import healthcheckRouter from './routes/healthcheck.routes.js';
 
 //use routes
 app.use("/api/v1/healthcheck",healthcheckRouter);
-
+app.use('/api', healthcheckRoutes);
 
 export {app}
